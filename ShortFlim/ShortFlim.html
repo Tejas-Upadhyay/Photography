@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Concert Video</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #121212;
+      color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+      padding: 3rem 0;
+      text-align: center;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      background: linear-gradient(90deg, #ff8a00, #e52e71);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 1px;
+    }
+
+    /* Video Container */
+    .content-wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .video-tile {
+      position: relative;
+      width: 100%;
+      /* ADJUST SIZE HERE */
+      max-width: 900px;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      cursor: pointer;
+      transition: transform 0.4s ease;
+    }
+
+    .video-tile:hover {
+      transform: scale(1.02);
+    }
+
+    .video-tile video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Play Icon Overlay */
+    .video-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 4rem;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .video-tile:hover .video-icon {
+      opacity: 1;
+    }
+
+    /* Fullscreen Overlay */
+    .fullscreen-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.98);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .fullscreen-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .fullscreen-video {
+      width: 95%;
+      max-height: 90%;
+      outline: none;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.1);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #1a1a1a;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .social-links a {
+      color: #f5f5f5;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: #ff8a00;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Short Flims</h1>
+    <p style="opacity: 0.7;">Featured Video</p>
+  </header>
+
+  <div class="content-wrapper">
+    <div class="video-tile" id="mainVideoTile">
+      <video muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+        <source src="shoot5.mp4" type="video/mp4">
+      </video>
+      <div class="video-icon"><i class="fas fa-play-circle"></i></div>
+    </div>
+  </div>
+
+  <div class="fullscreen-overlay" id="overlay">
+    <div class="close-btn" id="closeBtn"><i class="fas fa-times"></i></div>
+    <video class="fullscreen-video" id="fsVideo" controls src=""></video>
+  </div>
+
+  <footer>
+    <div class="social-links">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+    <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.5;">&copy; 2026 Short Flim Media</p>
+  </footer>
+
+  <script>
+    const tile = document.getElementById('mainVideoTile');
+    const overlay = document.getElementById('overlay');
+    const fsVideo = document.getElementById('fsVideo');
+    const closeBtn = document.getElementById('closeBtn');
+
+    // Open Video
+    tile.addEventListener('click', () => {
+      fsVideo.src = "shoot5.mp4"; // Set source
+      overlay.classList.add('active');
+      fsVideo.play();
+      document.body.style.overflow = 'hidden';
+    });
+
+    // Close Video
+    const closePlayer = () => {
+      overlay.classList.remove('active');
+      fsVideo.pause();
+      fsVideo.src = ""; // Clear source to stop loading
+      document.body.style.overflow = 'auto';
+    };
+
+    closeBtn.addEventListener('click', closePlayer);
+
+    // Close on background click
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closePlayer();
+    });
+
+    // Escape key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('active')) closePlayer();
+    });
+  </script>
+</body>
+
+</html>
