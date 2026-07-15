@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Short Film &mdash; Chromatic Narratives</title>
+    <title>Automotive &mdash; Chromatic Narratives</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -23,14 +23,24 @@
     </header>
 
     <section class="gallery">
-        <h2 class="fade">Short Film</h2>
+        <h2 class="fade">Automotive</h2>
 
-        <div class="coming-soon">
-            <p>Gallery coming soon</p>
+        <div class="gallery-grid" id="lightbox-grid">
+            <img class="fade" src="Images/cars/FerrariInterior.JPG" alt="Ferrari Interior" loading="lazy">
+            <img class="fade" src="Images/cars/bmwHeadLightsLeftJPG.JPG" alt="BMW Headlights" loading="lazy">
+            <img class="fade" src="Images/cars/2781RacingCivic.JPG" alt="Racing Civic" loading="lazy">
+            <img class="fade" src="Images/cars/zo6EngineBayJPG.JPG" alt="Corvette Z06 Engine" loading="lazy">
         </div>
 
         <a href="index.html" class="button">Back</a>
     </section>
+
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <span class="lightbox-prev">&lsaquo;</span>
+        <span class="lightbox-next">&rsaquo;</span>
+        <img class="lightbox-image" src="" alt="">
+    </div>
 
     <footer>
         &copy; 2026 Chromatic Narratives
